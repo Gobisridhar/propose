@@ -39,11 +39,6 @@
       color: #000;
     }
 
-    .button-container {
-      position: relative;
-      height: 80px;
-    }
-
     .btn {
       padding: 10px 25px;
       margin: 10px 5px;
@@ -52,7 +47,6 @@
       border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
-      position: relative;
     }
 
     .yes-btn {
@@ -63,7 +57,6 @@
     .no-btn {
       background-color: #f8d7da;
       color: #721c24;
-      position: absolute;
     }
 
     .btn:hover {
@@ -107,6 +100,19 @@
       }
     }
 
+    .rejection-message {
+      font-size: 20px;
+      color: #b71c1c;
+      font-style: italic;
+      margin-top: 20px;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Mobile responsive tweaks */
     @media (max-width: 480px) {
       h2 {
@@ -125,6 +131,11 @@
       .heart-emoji {
         font-size: 50px;
       }
+
+      .rejection-message {
+        font-size: 18px;
+        padding: 0 10px;
+      }
     }
   </style>
 </head>
@@ -135,7 +146,7 @@
     <h2 class="question">Do you love sri?</h2>
     <div class="button-container">
       <button class="yes-btn btn js-yes-btn">Yes</button>
-      <button class="no-btn btn js-no-btn" id="noButton">No</button>
+      <button class="no-btn btn js-no-btn">No</button>
     </div>
   </div>
 
@@ -147,41 +158,27 @@
     <div class="heart-emoji">❤️</div>
   </div>
 
- <script>
-  const yesBtn = document.querySelector('.js-yes-btn');
-  const noBtn = document.getElementById('noButton');
-  const resultBox = document.getElementById('resultBox');
-  const rejectionBox = document.getElementById('rejectionBox');
+  <!-- NO response -->
+  <div class="rejection-container container" id="rejectionBox">
+    <h2 class="rejection-message">Please don't lie, you have to accept me because I know you love me deep in your heart.</h2>
+  </div>
 
-  yesBtn.addEventListener('click', () => {
-    resultBox.style.display = 'block';
-    rejectionBox.style.display = 'none';
-  });
+  <script>
+    const yesBtn = document.querySelector('.js-yes-btn');
+    const noBtn = document.querySelector('.js-no-btn');
+    const resultBox = document.getElementById('resultBox');
+    const rejectionBox = document.getElementById('rejectionBox');
 
-  function moveButtonAway() {
-    const buttonContainer = document.querySelector('.button-container');
-    const maxX = buttonContainer.offsetWidth - noBtn.offsetWidth;
-    const maxY = buttonContainer.offsetHeight - noBtn.offsetHeight;
+    yesBtn.addEventListener('click', () => {
+      resultBox.style.display = 'block';
+      rejectionBox.style.display = 'none';
+    });
 
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
-
-    noBtn.style.left = `${randomX}px`;
-    noBtn.style.top = `${randomY}px`;
-  }
-
-  // Escape on mouse hover (desktop)
-  noBtn.addEventListener('mouseover', moveButtonAway);
-
-  // On touch (mobile), show rejection message instead of moving
-  noBtn.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevent accidental click
-    resultBox.style.display = 'none';
-    rejectionBox.style.display = 'block';
-  });
-</script>
+    noBtn.addEventListener('click', () => {
+      resultBox.style.display = 'none';
+      rejectionBox.style.display = 'block';
+    });
+  </script>
 
 </body>
-</html>
-
-
+</html>  
